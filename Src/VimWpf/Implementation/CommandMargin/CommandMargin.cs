@@ -21,6 +21,7 @@ namespace Vim.UI.Wpf.Implementation.CommandMargin
             IClassificationFormatMap classificationFormatMap,
             ICommonOperations commonOperations,
             IClipboardDevice clipboardDevice,
+            ICommandMarginColorSettings colorSettings,
             bool isFirstCommandMargin)
         {
             _controller = new CommandMarginController(
@@ -31,6 +32,7 @@ namespace Vim.UI.Wpf.Implementation.CommandMargin
                 classificationFormatMap,
                 commonOperations,
                 clipboardDevice,
+                colorSettings,
                 isFirstCommandMargin);
             _enabled = true;
         }

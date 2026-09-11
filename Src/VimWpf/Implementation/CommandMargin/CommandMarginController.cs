@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using Microsoft.VisualStudio.Text.Classification;
 using Vim.Extensions;
 using System.Text;
@@ -75,6 +76,7 @@ namespace Vim.UI.Wpf.Implementation.CommandMargin
         private readonly IClassificationFormatMap _classificationFormatMap;
         private readonly ICommonOperations _commonOperations;
         private readonly IClipboardDevice _clipboardDevice;
+        private readonly ICommandMarginColorSettings _colorSettings;
         private readonly FrameworkElement _parentVisualElement;
         private readonly bool _isFirstCommandMargin;
         private readonly PasteWaitMemo _pasteWaitMemo = new PasteWaitMemo();
@@ -138,6 +140,7 @@ namespace Vim.UI.Wpf.Implementation.CommandMargin
             IClassificationFormatMap classificationFormatMap,
             ICommonOperations commonOperations,
             IClipboardDevice clipboardDevice,
+            ICommandMarginColorSettings colorSettings,
             bool isFirstCommandMargin)
         {
             _vimBuffer = buffer;
@@ -147,6 +150,7 @@ namespace Vim.UI.Wpf.Implementation.CommandMargin
             _classificationFormatMap = classificationFormatMap;
             _commonOperations = commonOperations;
             _clipboardDevice = clipboardDevice;
+            _colorSettings = colorSettings;
             _isFirstCommandMargin = isFirstCommandMargin;
 
             InitializeMargin();
@@ -262,6 +266,10 @@ namespace Vim.UI.Wpf.Implementation.CommandMargin
             _margin.CommandLineTextBox.PreviewMouseDown += OnCommandLineTextBoxPreviewMouseDown;
             _editorFormatMap.FormatMappingChanged += OnFormatMappingChanged;
             _parentVisualElement.GotKeyboardFocus += OnParentVisualElementGotKeyboardFocus;
+            if (_colorSettings != null)
+            {
+                _colorSettings.Changed += OnModeColorSettingsChanged;
+            }
         }
 
         internal void Disconnect()
@@ -286,6 +294,10 @@ namespace Vim.UI.Wpf.Implementation.CommandMargin
             _margin.CommandLineTextBox.PreviewMouseDown -= OnCommandLineTextBoxPreviewMouseDown;
             _editorFormatMap.FormatMappingChanged -= OnFormatMappingChanged;
             _parentVisualElement.GotKeyboardFocus -= OnParentVisualElementGotKeyboardFocus;
+            if (_colorSettings != null)
+            {
+                _colorSettings.Changed -= OnModeColorSettingsChanged;
+            }
         }
 
         internal void Reset()
@@ -309,6 +321,7 @@ namespace Vim.UI.Wpf.Implementation.CommandMargin
         {
             var status = CommandMarginUtil.GetStatus(_vimBuffer, currentMode, forModeSwitch: true);
             UpdateCommandLine(status.Text, status.CaretPosition);
+            UpdateTextColor();
         }
 
         /// <summary>
@@ -364,13 +377,26 @@ namespace Vim.UI.Wpf.Implementation.CommandMargin
                 var textProperties = _classificationFormatMap.DefaultTextProperties;
                 _margin.TextForeground = textProperties.ForegroundBrush;
                 _margin.TextBackground = textProperties.BackgroundBrush;
+                return;
             }
-            else
+
+            if (_colorSettings != null &&
+                _colorSettings.IsEnabled &&
+                _colorSettings.TryGetColor(_vimBuffer.Mode.ModeKind, out var modeBackground))
             {
-                var propertyMap = _editorFormatMap.GetProperties(CommandMarginFormatDefinition.Name);
-                _margin.TextForeground = propertyMap.GetForegroundBrush(SystemColors.WindowTextBrush);
-                _margin.TextBackground = propertyMap.GetBackgroundBrush(SystemColors.WindowBrush);
+                _margin.TextBackground = new SolidColorBrush(modeBackground);
+                _margin.TextForeground = new SolidColorBrush(ColorContrastUtil.GetReadableForeground(modeBackground));
+                return;
             }
+
+            var propertyMap = _editorFormatMap.GetProperties(CommandMarginFormatDefinition.Name);
+            _margin.TextForeground = propertyMap.GetForegroundBrush(SystemColors.WindowTextBrush);
+            _margin.TextBackground = propertyMap.GetBackgroundBrush(SystemColors.WindowBrush);
+        }
+
+        private void OnModeColorSettingsChanged(object sender, EventArgs e)
+        {
+            UpdateTextColor();
         }
 
         /// <summary>

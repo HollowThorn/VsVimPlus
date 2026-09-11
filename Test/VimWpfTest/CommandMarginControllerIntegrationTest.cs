@@ -33,7 +33,8 @@ namespace Vim.UI.Wpf.UnitTest
                 VimEditorHost.ClassificationFormatMapService.GetClassificationFormatMap(_vimBuffer.TextView),
                 CommonOperationsFactory.GetCommonOperations(_vimBuffer.VimBufferData),
                 _clipboardDevice,
-                false);
+                colorSettings: null,
+                isFirstCommandMargin: false);
         }
 
         [WpfFact]

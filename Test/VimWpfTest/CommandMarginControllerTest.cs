@@ -61,7 +61,8 @@ namespace Vim.UI.Wpf.UnitTest
                 VimEditorHost.ClassificationFormatMapService.GetClassificationFormatMap(_vimBuffer.TextView),
                 CommonOperationsFactory.GetCommonOperations(vimBufferData),
                 _clipboardDevice,
-                false);
+                colorSettings: null,
+                isFirstCommandMargin: false);
         }
 
         public sealed class InCommandLineUpdateTest : CommandMarginControllerTest

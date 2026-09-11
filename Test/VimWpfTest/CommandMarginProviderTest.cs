@@ -30,7 +30,8 @@ namespace Vim.UI.Wpf.UnitTest
                 VimEditorHost.EditorFormatMapService,
                 VimEditorHost.ClassificationFormatMapService,
                 CommonOperationsFactory,
-                _clipboardDevice);
+                _clipboardDevice,
+                colorSettings: null);
             _commandMarginProvider = _commandMarginProviderRaw;
         }
 

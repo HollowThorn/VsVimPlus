@@ -75,9 +75,27 @@ namespace Vim.VisualStudio
 
         /// <summary>
         /// Do we use the editor command margin for status?  If false the status bar at the bottom
-        /// of VS will be used 
+        /// of VS will be used
         /// </summary>
         bool UseEditorCommandMargin { get; set; }
+
+        /// <summary>
+        /// Do we color the command margin based on the current Vim mode (Normal, Insert,
+        /// Visual, ...), similar to a Neovim statusline?
+        /// </summary>
+        bool UseModeColors { get; set; }
+
+        /// <summary>
+        /// Get the configured hex color (e.g. "#005F87") for the mode family that the given
+        /// ModeKind belongs to, or null if that ModeKind is never mode-colored
+        /// </summary>
+        string GetModeColor(ModeKind modeKind);
+
+        /// <summary>
+        /// Set the hex color for the mode family that the given ModeKind belongs to.  Passing
+        /// null or an invalid hex color resets that family back to its default color
+        /// </summary>
+        void SetModeColor(ModeKind modeKind, string hexColorOrNull);
 
         /// <summary>
         /// Do we keep macro recording clean by disabling intellisense, auto formatting, etc ... 

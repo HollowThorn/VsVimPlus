@@ -29,6 +29,7 @@ namespace Vim.UI.Wpf.Implementation.CommandMargin
         private readonly IClassificationFormatMapService _classificationFormatMapService;
         private readonly ICommonOperationsFactory _commonOperationsFactory;
         private readonly IClipboardDevice _clipboardDevice;
+        private readonly ICommandMarginColorSettings _colorSettings;
         private bool _isFirstCommandMargin = true;
 
         [ImportingConstructor]
@@ -37,13 +38,15 @@ namespace Vim.UI.Wpf.Implementation.CommandMargin
             IEditorFormatMapService editorFormatMapService,
             IClassificationFormatMapService classificationFormatMapService,
             ICommonOperationsFactory commonOperationsFactory,
-            IClipboardDevice clipboardDevice)
+            IClipboardDevice clipboardDevice,
+            [Import(AllowDefault = true)] ICommandMarginColorSettings colorSettings)
         {
             _vim = vim;
             _editorFormatMapService = editorFormatMapService;
             _classificationFormatMapService = classificationFormatMapService;
             _commonOperationsFactory = commonOperationsFactory;
             _clipboardDevice = clipboardDevice;
+            _colorSettings = colorSettings;
         }
 
         internal bool TryGetCommandMargin(IVimBuffer vimBuffer, out CommandMargin commandMargin)
@@ -59,7 +62,7 @@ namespace Vim.UI.Wpf.Implementation.CommandMargin
             var editorFormatMap = _editorFormatMapService.GetEditorFormatMap(wpfTextView);
             var classificationFormatMap = _classificationFormatMapService.GetClassificationFormatMap(wpfTextView);
             var commonOperations = _commonOperationsFactory.GetCommonOperations(vimBuffer.VimBufferData);
-            var commandMargin = new CommandMargin(wpfTextView.VisualElement, vimBuffer, editorFormatMap, classificationFormatMap, commonOperations, _clipboardDevice, _isFirstCommandMargin);
+            var commandMargin = new CommandMargin(wpfTextView.VisualElement, vimBuffer, editorFormatMap, classificationFormatMap, commonOperations, _clipboardDevice, _colorSettings, _isFirstCommandMargin);
             _isFirstCommandMargin = false;
 
             vimBuffer.Properties.AddProperty(s_key, commandMargin);

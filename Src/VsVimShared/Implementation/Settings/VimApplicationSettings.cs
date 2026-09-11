@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
+using System.Linq;
+using System.Text.RegularExpressions;
 using Microsoft.VisualStudio.Settings;
 using Microsoft.VisualStudio.Shell;
 using Vim.UI.Wpf;
@@ -30,6 +32,8 @@ namespace Vim.VisualStudio.Implementation.Settings
         internal const string UseEditorDefaultsName = "UseEditorDefaults";
         internal const string UseEditorTabAndBackspaceName = "UseEditorTabAndBackspace";
         internal const string UseEditorCommandMarginName = "UseEditorCommandMargin";
+        internal const string UseModeColorsName = "UseModeColors";
+        internal const string ModeColorsName = "ModeColors";
         internal const string CleanMacrosName = "CleanMacros";
         internal const string ReportClipboardErrorsName = "ReportClipboardErrors";
         internal const string LastVersionUsedName = "LastVersionUsed";
@@ -94,6 +98,60 @@ namespace Vim.VisualStudio.Implementation.Settings
         internal void SetEnum<T>(string propertyName, T value) where T : struct, Enum
         {
             SetString(propertyName, value.ToString());
+        }
+
+        private static bool IsValidHexColor(string value) =>
+            !string.IsNullOrEmpty(value) && Regex.IsMatch(value, "^#[0-9A-Fa-f]{6}$");
+
+        private Dictionary<ModeColorFamily, string> GetModeColorMap()
+        {
+            var map = ModeColorDefaults.Colors.ToDictionary(pair => pair.Key, pair => pair.Value);
+
+            var stored = GetString(ModeColorsName, string.Empty) ?? string.Empty;
+            foreach (var entry in stored.Split(';'))
+            {
+                var parts = entry.Split('=');
+                if (parts.Length == 2 &&
+                    Enum.TryParse(parts[0], out ModeColorFamily family) &&
+                    IsValidHexColor(parts[1]))
+                {
+                    map[family] = parts[1];
+                }
+            }
+
+            return map;
+        }
+
+        private void SetModeColorMap(Dictionary<ModeColorFamily, string> map)
+        {
+            var text = string.Join(";", map.Select(pair => $"{pair.Key}={pair.Value}"));
+            SetString(ModeColorsName, text);
+        }
+
+        private string GetModeColorCore(ModeKind modeKind)
+        {
+            var family = ModeColorDefaults.GetFamily(modeKind);
+            if (family == null)
+            {
+                return null;
+            }
+
+            return GetModeColorMap()[family.Value];
+        }
+
+        private void SetModeColorCore(ModeKind modeKind, string hexColorOrNull)
+        {
+            var family = ModeColorDefaults.GetFamily(modeKind);
+            if (family == null)
+            {
+                return;
+            }
+
+            var map = GetModeColorMap();
+            map[family.Value] = IsValidHexColor(hexColorOrNull)
+                ? hexColorOrNull
+                : ModeColorDefaults.GetDefaultColor(family.Value);
+            SetModeColorMap(map);
         }
 
         private ReadOnlyCollection<CommandKeyBinding> GetRemovedBindings()
@@ -170,6 +228,16 @@ namespace Vim.VisualStudio.Implementation.Settings
             get { return GetBoolean(UseEditorCommandMarginName, defaultValue: true); }
             set { SetBoolean(UseEditorCommandMarginName, value); }
         }
+
+        bool IVimApplicationSettings.UseModeColors
+        {
+            get { return GetBoolean(UseModeColorsName, defaultValue: true); }
+            set { SetBoolean(UseModeColorsName, value); }
+        }
+
+        string IVimApplicationSettings.GetModeColor(ModeKind modeKind) => GetModeColorCore(modeKind);
+
+        void IVimApplicationSettings.SetModeColor(ModeKind modeKind, string hexColorOrNull) => SetModeColorCore(modeKind, hexColorOrNull);
 
         bool IVimApplicationSettings.CleanMacros
         {
