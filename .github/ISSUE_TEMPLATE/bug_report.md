@@ -27,7 +27,7 @@ If applicable, add screenshots to help explain your problem.
 **Environment (please complete the following information):**
 
 - Visual Studio version:
-- VsVim version:
+- VsVimPlus version:
 - Programming Language:
 - Check(Type 'x') any that are installed:
     - [ ] ReSharper
@@ -38,7 +38,4 @@ Add any other context about the problem here.
 
 Note:
 The following is written about contributing.
-https://github.com/VsVim/VsVim/blob/master/CONTRIBUTING.md
-
-General Keyboard configuration problems are described below.
-https://github.com/VsVim/VsVim/issues/2527
+https://github.com/HollowThorn/VsVimPlus/blob/master/CONTRIBUTING.md

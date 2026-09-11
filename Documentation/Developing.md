@@ -1,7 +1,7 @@
-# Developing VsVim
+# Developing VsVimPlus
 
 When developing please follow the
-[coding guidelines](https://github.com/VsVim/VsVim/blob/master/Documentation/CodingGuidelines.md)
+[coding guidelines](https://github.com/HollowThorn/VsVimPlus/blob/master/Documentation/CodingGuidelines.md)
 
 ## Requirements
 VsVim can be developed using Visual Studio 2022. The required workloads
@@ -42,14 +42,13 @@ The version of the WPF editor it loads is configured in exactly the same way
 as the unit tests.
 
 ## CI 
-The goals of the CI is:
+CI runs on GitHub Actions. The goals of the CI are:
 
-1. To validate the VsVim behavior on supported editor versions
-1. To validate the consistency of the build: versions numbers, VSIX content,
+1. To validate VsVimPlus's behavior on supported editor versions
+1. To validate the consistency of the build: version numbers, VSIX content,
 etc ...
-1. To upload successful builds to the Open VSIX gallery
+1. To build and publish a Release VSIX as a GitHub Release whenever a version
+tag (e.g. `v1.0.0`) is pushed
 
-Azure DevOps Links:
-
-- [VsVim Builds](https://dev.azure.com/VsVim/VsVim/_build?definitionId=1&_a=summary)
-- [Vsvim Project](https://dev.azure.com/VsVim/VsVim)
+See the workflow definition and run history at
+[GitHub Actions](https://github.com/HollowThorn/VsVimPlus/actions).

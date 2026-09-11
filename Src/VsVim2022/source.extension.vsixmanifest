@@ -1,14 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Publisher="Jared Parsons" Version="1.0.0.0" Id="VsVim.Microsoft.e97cd707-324b-4e35-a669-eef8dae4b8cf" Language="en-US" />
-    <DisplayName>VsVim 2026</DisplayName>
-    <Description>VIM emulation layer for Visual Studio 2026 and 2022</Description>
-    <MoreInfo>https://github.com/HollowThorn/VsVim</MoreInfo>
+    <Identity Publisher="Tamby Haco" Version="1.0.0.0" Id="TambyHaco.VsVimPlus.8be0ef35-1c35-4c8d-8448-5d5c0607ad1b" Language="en-US" />
+    <DisplayName>VsVimPlus</DisplayName>
+    <Description>Vim emulation layer for Visual Studio 2026 and 2022, with extra editor-experience features on top. A fork of VsVim.</Description>
+    <MoreInfo>https://github.com/HollowThorn/VsVimPlus</MoreInfo>
     <License>License.txt</License>
-    <Icon>VsVim_large.png</Icon>
-    <PreviewImage>VsVim_small.png</PreviewImage>
-    <Tags>vsvim</Tags>
+    <Tags>vsvimplus, vim, vsvim</Tags>
   </Metadata>
   <Installation>
     <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0,19.0)">
