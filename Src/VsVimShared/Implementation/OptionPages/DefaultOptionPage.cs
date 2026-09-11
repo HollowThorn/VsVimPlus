@@ -261,11 +261,6 @@ namespace Vim.VisualStudio.Implementation.OptionPages
         [Category(CategoryEditing)]
         public bool ReportClipboardErrors { get; set; }
 
-        [DisplayName("Use System Clipboard as Unnamed Register")]
-        [Description("Equivalent to Vim's 'clipboard=unnamed': y/d/p/P without an explicit register read from and write to the Windows clipboard, so content copied outside Visual Studio can be pasted with p/P. Off by default")]
-        [Category(CategoryEditing)]
-        public bool UseSystemClipboardAsUnnamed { get; set; }
-
         [DisplayName("VimRc File Loading")]
         [Description("Controls how VsVim probes for vsvimrc / vimrc files")]
         [Category(CategoryGeneral)]
@@ -406,7 +401,6 @@ namespace Vim.VisualStudio.Implementation.OptionPages
                 UseEditorCommandMargin = vimApplicationSettings.UseEditorCommandMargin;
                 CleanMacros = vimApplicationSettings.CleanMacros;
                 ReportClipboardErrors = vimApplicationSettings.ReportClipboardErrors;
-                UseSystemClipboardAsUnnamed = vimApplicationSettings.UseSystemClipboardAsUnnamed;
                 VimRcLoadSetting = vimApplicationSettings.VimRcLoadSetting;
                 DisplayControlCharacters = vimApplicationSettings.DisplayControlChars;
                 DisplayVimRcLoadErrors = !vimApplicationSettings.HaveNotifiedVimRcErrors;
@@ -439,7 +433,6 @@ namespace Vim.VisualStudio.Implementation.OptionPages
                 vimApplicationSettings.UseEditorCommandMargin = UseEditorCommandMargin;
                 vimApplicationSettings.CleanMacros = CleanMacros;
                 vimApplicationSettings.ReportClipboardErrors = ReportClipboardErrors;
-                vimApplicationSettings.UseSystemClipboardAsUnnamed = UseSystemClipboardAsUnnamed;
                 vimApplicationSettings.VimRcLoadSetting = VimRcLoadSetting;
                 vimApplicationSettings.DisplayControlChars = DisplayControlCharacters;
                 vimApplicationSettings.HaveNotifiedVimRcErrors = !DisplayVimRcLoadErrors;

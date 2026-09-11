@@ -22,8 +22,14 @@ added here may or may not be proposed back upstream.
 - **System clipboard as the unnamed register** — optionally makes `y`/`d`/`p`/`P`
   (without an explicit register) read from and write to the Windows clipboard, so
   content copied outside Visual Studio can be pasted with `p`/`P`. Off by default;
-  enable it under `Tools > Options > VsVim > Defaults` ("Use System Clipboard as
+  enable it under `Tools > Options > VsVim > VsVimPlus` ("Use System Clipboard as
   Unnamed Register").
+
+Fork-added settings that don't need a dedicated UI (like the clipboard option above)
+live together under `Tools > Options > VsVim > VsVimPlus`, kept separate from
+upstream VsVim's own `Defaults`/`Keyboard` pages so pulling in upstream changes
+doesn't collide with them. Features needing richer UI (like Mode Colors) get their
+own page instead.
 
 ### Removed from upstream
 

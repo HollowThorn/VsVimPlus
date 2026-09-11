@@ -79,6 +79,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\OptionPages\ModeColorsSettingsControl.xaml.cs">
       <DependentUpon>ModeColorsSettingsControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Implementation\OptionPages\VsVimPlusOptionPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\PowerShellTools\IPowerShellToolsUtil.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\PowerShellTools\PowerShellToolsExtensionAdapter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\PowerShellTools\PowerShellToolsUtil.cs" />
