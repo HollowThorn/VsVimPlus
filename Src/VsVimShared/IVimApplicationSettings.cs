@@ -86,6 +86,14 @@ namespace Vim.VisualStudio
         bool UseModeColors { get; set; }
 
         /// <summary>
+        /// Do we use the system clipboard as the unnamed register?  Equivalent to Vim's
+        /// 'clipboard=unnamed' setting: y/d/p/P (without an explicit register) read from and
+        /// write to the Windows clipboard.  Off by default so this never fights with a
+        /// clipboard setting already configured via a vimrc.
+        /// </summary>
+        bool UseSystemClipboardAsUnnamed { get; set; }
+
+        /// <summary>
         /// Get the configured hex color (e.g. "#005F87") for the mode family that the given
         /// ModeKind belongs to, or null if that ModeKind is never mode-colored
         /// </summary>

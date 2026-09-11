@@ -4,7 +4,6 @@ param (
   [switch]$test = $false,
   [switch]$testExtra = $false,
   [switch]$updateVsixVersion = $false,
-  [switch]$uploadVsix = $false,
   [switch]$help = $false,
 
   # Settings
@@ -31,7 +30,6 @@ function Print-Usage() {
   Write-Host "  -test                     Run unit tests"
   Write-Host "  -testExtra                Run extra verification"
   Write-Host "  -updateVsixVersion        Update the VSIX manifest version"
-  Write-Host "  -uploadVsix               Upload the VSIX to the Open Gallery"
 
   Write-Host ""
   Write-Host "Settings:"
@@ -72,37 +70,6 @@ function Update-VsixVersion() {
     $version = New-Object Version ([int]$version.Major),([int]$version.Minor),$env:GITHUB_RUN_NUMBER
     $attrVersion.InnerText = $version
     $vsixXml.Save($vsixManifest) | Out-Null
-  }
-}
-
-# Meant to mimic the OpenVsix Gallery script for uploading the VSIX 
-function Upload-Vsix() {
-  if ($env:GITHUB_RUN_NUMBER -eq $null) {
-    throw "This is only meant to run in Azure DevOps"
-  }
-
-  Write-Host "Uploading VSIX to the Open Gallery"
-  foreach ($vsVersion in $vsVersions) {
-    Write-Host "Uploading $vsVersion"
-    $vsixFile = Join-Path $deployDir $vsVersion
-    $vsixFile = Join-Path $vsixFile "VsVim.vsix"
-    $vsixUploadEndpoint = "http://vsixgallery.com/api/upload"
-    $repoUrl = "https://github.com/VsVim/VsVim/"
-    [Reflection.Assembly]::LoadWithPartialName("System.Web") | Out-Null
-    $repo = [System.Web.HttpUtility]::UrlEncode($repoUrl)
-    $issueTracker = [System.Web.HttpUtility]::UrlEncode(($repoUrl + "issues/"))
-
-    [string]$url = ($vsixUploadEndpoint + "?repo=" + $repo + "&issuetracker=" + $issueTracker)
-    [byte[]]$bytes = [System.IO.File]::ReadAllBytes($vsixFile)
-
-    try {
-        $response = Invoke-WebRequest $url -Method Post -Body $bytes -UseBasicParsing
-        'OK' | Write-Host -ForegroundColor Green
-    }
-    catch{
-        'FAIL' | Write-TaskError
-        $_.Exception.Response.Headers["x-error"] | Write-TaskError
-    }
   }
 }
 
@@ -147,7 +114,9 @@ function Test-VsixContents() {
       "Colors.pkgdef",
       "extension.vsixmanifest",
       "License.txt",
+      "System.Text.Encoding.CodePages.dll",
       "Vim.Core.dll",
+      "Vim.Core.pdb",
       "VsVim.dll",
       "VsVim.pkgdef",
       "VsVim_large.png",
@@ -331,10 +300,6 @@ try {
   if ($testExtra) {
     Test-VsixContents
     Test-Version
-  }
-
-  if ($uploadVsix) {
-    Upload-Vsix
   }
 }
 catch {

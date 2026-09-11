@@ -43,6 +43,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\InlineRename\InlineRenameUtil.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\IntelliCode\IntelliCodeCommandTarget.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\Intellicode\IntelliCodeExtensionAdapter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Implementation\Misc\ClipboardSettingSync.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\Misc\CSharpAdapter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\Misc\ExtensionAdapterBroker.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\Misc\FallbackKeyProcessor.cs" />

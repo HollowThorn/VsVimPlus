@@ -33,6 +33,7 @@ namespace Vim.VisualStudio.Implementation.Settings
         internal const string UseEditorTabAndBackspaceName = "UseEditorTabAndBackspace";
         internal const string UseEditorCommandMarginName = "UseEditorCommandMargin";
         internal const string UseModeColorsName = "UseModeColors";
+        internal const string UseSystemClipboardAsUnnamedName = "UseSystemClipboardAsUnnamed";
         internal const string ModeColorsName = "ModeColors";
         internal const string CleanMacrosName = "CleanMacros";
         internal const string ReportClipboardErrorsName = "ReportClipboardErrors";
@@ -238,6 +239,12 @@ namespace Vim.VisualStudio.Implementation.Settings
         string IVimApplicationSettings.GetModeColor(ModeKind modeKind) => GetModeColorCore(modeKind);
 
         void IVimApplicationSettings.SetModeColor(ModeKind modeKind, string hexColorOrNull) => SetModeColorCore(modeKind, hexColorOrNull);
+
+        bool IVimApplicationSettings.UseSystemClipboardAsUnnamed
+        {
+            get { return GetBoolean(UseSystemClipboardAsUnnamedName, defaultValue: false); }
+            set { SetBoolean(UseSystemClipboardAsUnnamedName, value); }
+        }
 
         bool IVimApplicationSettings.CleanMacros
         {
