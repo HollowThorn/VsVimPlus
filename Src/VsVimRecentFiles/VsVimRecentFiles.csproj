@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Vim.VisualStudio.RecentFiles</RootNamespace>
+    <AssemblyName>VsVim.RecentFiles</AssemblyName>
+    <TargetFramework>net472</TargetFramework>
+    <VsVimProjectType>Vsix</VsVimProjectType>
+    <VsVimVisualStudioTargetVersion>17.0</VsVimVisualStudioTargetVersion>
+    <UseWPF>true</UseWPF>
+    <!-- Without this, the generated pkgdef registers the package via a weak "Assembly" name
+         reference instead of an explicit "CodeBase" path - which VS can't resolve for a
+         private, unsigned DLL, so the package (and its whole command table) never loads. -->
+    <UseCodebase>true</UseCodebase>
+    <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
+    <EmbedUntrackedSources>false</EmbedUntrackedSources>
+
+    <!-- This project has no source.extension.vsixmanifest of its own: it is not a standalone
+         VSIX. Its output (DLL + compiled command table + pkgdef) is pulled into VsVim2022's
+         VSIX via the ProjectReference in VsVim2022.csproj plus the matching Asset entries in
+         VsVim2022's own manifest. -->
+    <CreateVsixContainer>false</CreateVsixContainer>
+    <DeployExtension>false</DeployExtension>
+    <IncludeAssemblyInVSIXContainer>false</IncludeAssemblyInVSIXContainer>
+    <IncludeDebugSymbolsInVSIXContainer>false</IncludeDebugSymbolsInVSIXContainer>
+    <IncludeDebugSymbolsInLocalVSIXDeployment>false</IncludeDebugSymbolsInLocalVSIXDeployment>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="WindowsBase" />
+    <ProjectReference Include="..\VimCore\VimCore.fsproj">
+      <Name>VimCore</Name>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="RecentFiles.vsct" Link="RecentFiles.vsct" />
+    <VSCTCompile Include="RecentFiles.vsct">
+      <ResourceName>Menus.ctmenu</ResourceName>
+      <SubType>Designer</SubType>
+    </VSCTCompile>
+  </ItemGroup>
+</Project>

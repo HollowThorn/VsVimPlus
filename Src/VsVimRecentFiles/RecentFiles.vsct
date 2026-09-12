@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <!-- This defines a single, menu-less command so it can be bound via Tools > Options >
+       Keyboard, and invoked from a vimrc via ":vscmd .VsVimPlus.ShowRecentFiles". -->
+
+  <Extern href="stdidcmd.h" />
+  <Extern href="vsshlids.h" />
+
+  <Commands package="guidRecentFilesPkg">
+    <Groups>
+      <Group guid="guidRecentFilesCmdSet" id="RecentFilesMenuGroup" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS" />
+      </Group>
+    </Groups>
+
+    <Buttons>
+      <Button guid="guidRecentFilesCmdSet" id="cmdidShowRecentFiles" priority="0x0100" type="Button">
+        <Parent guid="guidRecentFilesCmdSet" id="RecentFilesMenuGroup" />
+        <CommandFlag>CommandWellOnly</CommandFlag>
+        <Strings>
+          <CommandName>cmdidShowRecentFiles</CommandName>
+          <ButtonText>Show Recent Files</ButtonText>
+          <CanonicalName>.VsVimPlus.ShowRecentFiles</CanonicalName>
+          <LocCanonicalName>.VsVimPlus.ShowRecentFiles</LocCanonicalName>
+        </Strings>
+      </Button>
+    </Buttons>
+  </Commands>
+
+  <Symbols>
+    <GuidSymbol name="guidRecentFilesPkg" value="{8ecfad0e-b593-4d73-9ef7-27efd2767cf8}" />
+
+    <GuidSymbol name="guidRecentFilesCmdSet" value="{9bc31fa3-cbec-487c-9e54-5ab7258ecdce}">
+      <IDSymbol name="RecentFilesMenuGroup" value="0x1020" />
+      <IDSymbol name="cmdidShowRecentFiles" value="0x0100" />
+    </GuidSymbol>
+  </Symbols>
+</CommandTable>
