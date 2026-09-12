@@ -8,6 +8,7 @@ namespace Vim.UI.Wpf.Implementation.CommandMargin
     {
         internal const string ExternalEditBanner = "External edit detected (hit <Esc> to return to previous mode, <C-c> to cancel external edit)";
         internal const string InsertBanner = "-- INSERT --";
+        internal const string NormalBanner = "-- NORMAL --";
         internal const string ReplaceBanner = "-- REPLACE --";
         internal const string SelectBlockBanner = "-- SELECT BLOCK --";
         internal const string SelectBlockOneTimeCommandBanner = "-- ({0}) SELECT BLOCK --";

@@ -19,6 +19,8 @@ added here may or may not be proposed back upstream.
   the current Vim mode (Normal, Insert, Visual, Replace, Command...), similar to
   Neovim statusline plugins. It's on by default; colors can be customized (or the
   feature turned off entirely) under `Tools > Options > VsVim > Mode Colors`.
+
+  <img src="Documentation/images/mode-colors-normal.png" alt="Normal mode status bar" width="500"> <img src="Documentation/images/mode-colors-insert.png" alt="Insert mode status bar" width="500">
 - **System clipboard as the unnamed register** — optionally makes `y`/`d`/`p`/`P`
   (without an explicit register) read from and write to the Windows clipboard, so
   content copied outside Visual Studio can be pasted with `p`/`P`. Off by default;

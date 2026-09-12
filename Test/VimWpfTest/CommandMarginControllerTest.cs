@@ -156,7 +156,7 @@ namespace Vim.UI.Wpf.UnitTest
                 mode.SetupGet(x => x.ModeKind).Returns(ModeKind.Normal);
                 _vimBuffer.NormalModeImpl = mode.Object;
                 _vimBuffer.RaiseSwitchedMode(new SwitchModeEventArgs(_vimBuffer.NormalMode, _vimBuffer.NormalModeImpl, ModeArgument.None));
-                Assert.Equal(string.Empty, _marginControl.CommandLineTextBox.Text);
+                Assert.Equal(CommandMarginResources.NormalBanner, _marginControl.CommandLineTextBox.Text);
             }
 
             /// <summary>
