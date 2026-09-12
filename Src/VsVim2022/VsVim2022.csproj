@@ -84,7 +84,10 @@
          alongside VsVim's own, per the Asset entries in source.extension.vsixmanifest. -->
     <ProjectReference Include="..\VsVimRecentFiles\VsVimRecentFiles.csproj">
       <Name>VsVimRecentFiles</Name>
-      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3bPkgdefProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <!-- Deliberately no "BuiltProjectOutputGroupDependencies" here: that would pull in
+           Vim.Core.dll a second time (VsVimRecentFiles also references VimCore.fsproj), and
+           VimCore's own ProjectReference above already supplies it. -->
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3bPkgdefProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
       <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
       <ForceIncludeInVSIX>true</ForceIncludeInVSIX>
     </ProjectReference>
