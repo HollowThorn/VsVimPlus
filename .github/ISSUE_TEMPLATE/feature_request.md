@@ -30,4 +30,4 @@ Add any other context or screenshots about the feature request here.
 
 Note:
 Please refer to the following. The goals of this project are written.
-https://github.com/VsVim/VsVim/blob/master/Documentation/Project%20Goals.md
+https://github.com/HollowThorn/VsVimPlus/blob/master/Documentation/Project%20Goals.md

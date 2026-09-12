@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using Microsoft.VisualStudio.Text.Classification;
 using Vim.Extensions;
 using System.Text;
@@ -75,6 +76,7 @@ namespace Vim.UI.Wpf.Implementation.CommandMargin
         private readonly IClassificationFormatMap _classificationFormatMap;
         private readonly ICommonOperations _commonOperations;
         private readonly IClipboardDevice _clipboardDevice;
+        private readonly ICommandMarginColorSettings _colorSettings;
         private readonly FrameworkElement _parentVisualElement;
         private readonly bool _isFirstCommandMargin;
         private readonly PasteWaitMemo _pasteWaitMemo = new PasteWaitMemo();
@@ -84,6 +86,7 @@ namespace Vim.UI.Wpf.Implementation.CommandMargin
         private EditKind _editKind;
         private bool _processingVirtualKeyInputs;
         private bool _changingFocus;
+        private bool _hasStartupMessage;
 
         /// <summary>
         /// We need to hold a reference to Text Editor visual element.
@@ -138,6 +141,7 @@ namespace Vim.UI.Wpf.Implementation.CommandMargin
             IClassificationFormatMap classificationFormatMap,
             ICommonOperations commonOperations,
             IClipboardDevice clipboardDevice,
+            ICommandMarginColorSettings colorSettings,
             bool isFirstCommandMargin)
         {
             _vimBuffer = buffer;
@@ -147,6 +151,7 @@ namespace Vim.UI.Wpf.Implementation.CommandMargin
             _classificationFormatMap = classificationFormatMap;
             _commonOperations = commonOperations;
             _clipboardDevice = clipboardDevice;
+            _colorSettings = colorSettings;
             _isFirstCommandMargin = isFirstCommandMargin;
 
             InitializeMargin();
@@ -168,18 +173,13 @@ namespace Vim.UI.Wpf.Implementation.CommandMargin
         private void InitializeMargin()
         {
             var message = string.Empty;
-            if (_isFirstCommandMargin)
+            if (_isFirstCommandMargin &&
+                _vimBuffer.Vim.VimRcState is VimRcState.LoadSucceeded rcState &&
+                rcState.VimRcPath.VimRcKind != VimRcKind.VimRc &&
+                rcState.Errors.Length != 0)
             {
-                if (_vimBuffer.Vim.VimRcState is VimRcState.LoadSucceeded rcState &&
-                        rcState.VimRcPath.VimRcKind != VimRcKind.VimRc &&
-                        rcState.Errors.Length != 0)
-                {
-                    message = string.Join(Environment.NewLine, rcState.Errors);
-                }
-                else
-                {
-                    message = $"Welcome to VsVim Version {VimConstants.VersionNumber}";
-                }
+                message = string.Join(Environment.NewLine, rcState.Errors);
+                _hasStartupMessage = true;
             }
             _margin.CommandLineTextBox.Text = message;
         }
@@ -262,6 +262,10 @@ namespace Vim.UI.Wpf.Implementation.CommandMargin
             _margin.CommandLineTextBox.PreviewMouseDown += OnCommandLineTextBoxPreviewMouseDown;
             _editorFormatMap.FormatMappingChanged += OnFormatMappingChanged;
             _parentVisualElement.GotKeyboardFocus += OnParentVisualElementGotKeyboardFocus;
+            if (_colorSettings != null)
+            {
+                _colorSettings.Changed += OnModeColorSettingsChanged;
+            }
         }
 
         internal void Disconnect()
@@ -286,6 +290,10 @@ namespace Vim.UI.Wpf.Implementation.CommandMargin
             _margin.CommandLineTextBox.PreviewMouseDown -= OnCommandLineTextBoxPreviewMouseDown;
             _editorFormatMap.FormatMappingChanged -= OnFormatMappingChanged;
             _parentVisualElement.GotKeyboardFocus -= OnParentVisualElementGotKeyboardFocus;
+            if (_colorSettings != null)
+            {
+                _colorSettings.Changed -= OnModeColorSettingsChanged;
+            }
         }
 
         internal void Reset()
@@ -309,6 +317,7 @@ namespace Vim.UI.Wpf.Implementation.CommandMargin
         {
             var status = CommandMarginUtil.GetStatus(_vimBuffer, currentMode, forModeSwitch: true);
             UpdateCommandLine(status.Text, status.CaretPosition);
+            UpdateTextColor();
         }
 
         /// <summary>
@@ -364,13 +373,26 @@ namespace Vim.UI.Wpf.Implementation.CommandMargin
                 var textProperties = _classificationFormatMap.DefaultTextProperties;
                 _margin.TextForeground = textProperties.ForegroundBrush;
                 _margin.TextBackground = textProperties.BackgroundBrush;
+                return;
             }
-            else
+
+            if (_colorSettings != null &&
+                _colorSettings.IsEnabled &&
+                _colorSettings.TryGetColor(_vimBuffer.Mode.ModeKind, out var modeBackground))
             {
-                var propertyMap = _editorFormatMap.GetProperties(CommandMarginFormatDefinition.Name);
-                _margin.TextForeground = propertyMap.GetForegroundBrush(SystemColors.WindowTextBrush);
-                _margin.TextBackground = propertyMap.GetBackgroundBrush(SystemColors.WindowBrush);
+                _margin.TextBackground = new SolidColorBrush(modeBackground);
+                _margin.TextForeground = new SolidColorBrush(ColorContrastUtil.GetReadableForeground(modeBackground));
+                return;
             }
+
+            var propertyMap = _editorFormatMap.GetProperties(CommandMarginFormatDefinition.Name);
+            _margin.TextForeground = propertyMap.GetForegroundBrush(SystemColors.WindowTextBrush);
+            _margin.TextBackground = propertyMap.GetBackgroundBrush(SystemColors.WindowBrush);
+        }
+
+        private void OnModeColorSettingsChanged(object sender, EventArgs e)
+        {
+            UpdateTextColor();
         }
 
         /// <summary>
@@ -787,7 +809,23 @@ namespace Vim.UI.Wpf.Implementation.CommandMargin
             else
             {
                 if (args.PreviousMode?.ModeKind == ModeKind.Uninitialized)
+                {
+                    // This is the buffer's very first real mode (almost always Normal), assigned
+                    // during startup before the user has done anything. If InitializeMargin left
+                    // a vimrc error message on display, leave the text alone so it isn't
+                    // immediately clobbered - but the color always needs to catch up, since
+                    // UpdateTextColor() ran in the constructor while the mode was still
+                    // Uninitialized and picked the wrong (default) color.
+                    if (_hasStartupMessage)
+                    {
+                        UpdateTextColor();
+                    }
+                    else
+                    {
+                        UpdateForSwitchMode(args.CurrentMode);
+                    }
                     return;
+                }
 
                 UpdateForSwitchMode(args.CurrentMode);
             }

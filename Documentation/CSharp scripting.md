@@ -2,7 +2,7 @@ C# Scripting
 ===
 
 VsVim 2.7.0 adds the feature to run C# scripts.  
-This feature is supported in Visual Studio 2019 and later as well as Visual Studio for Mac.
+This feature is supported in Visual Studio 2019 and later.
 
 ## Execution method
 
@@ -27,7 +27,6 @@ It is assumed to be used for debugging.
 
 create the following script file.  
 
-Windows version
 ```csharp
 //Hello.csx
 
@@ -35,14 +34,6 @@ using System.Windows;
 
 MessageBox.Show("Hello, World!");
 
-```
-
-or for Mac
-
-```csharp
-//Hello.csx
-
-MonoDevelop.Ide.MessageService.ShowMessage("Hello, World!");
 ```
 
 Place this file in the `vsvimscripts` folder.  

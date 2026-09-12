@@ -34,6 +34,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\CommandMargin\CommandMarginController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\CommandMargin\CommandMarginFormatDefinition.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\CommandMargin\CommandMarginProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Implementation\CommandMargin\ColorContrastUtil.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Implementation\CommandMargin\ICommandMarginColorSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\CommandMargin\CommandMarginResources.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\CommandMargin\CommandMarginUtil.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\Directory\DirectoryContentType.cs" />

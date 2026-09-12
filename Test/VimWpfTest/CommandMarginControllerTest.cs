@@ -61,7 +61,8 @@ namespace Vim.UI.Wpf.UnitTest
                 VimEditorHost.ClassificationFormatMapService.GetClassificationFormatMap(_vimBuffer.TextView),
                 CommonOperationsFactory.GetCommonOperations(vimBufferData),
                 _clipboardDevice,
-                false);
+                colorSettings: null,
+                isFirstCommandMargin: false);
         }
 
         public sealed class InCommandLineUpdateTest : CommandMarginControllerTest
@@ -155,7 +156,7 @@ namespace Vim.UI.Wpf.UnitTest
                 mode.SetupGet(x => x.ModeKind).Returns(ModeKind.Normal);
                 _vimBuffer.NormalModeImpl = mode.Object;
                 _vimBuffer.RaiseSwitchedMode(new SwitchModeEventArgs(_vimBuffer.NormalMode, _vimBuffer.NormalModeImpl, ModeArgument.None));
-                Assert.Equal(string.Empty, _marginControl.CommandLineTextBox.Text);
+                Assert.Equal(CommandMarginResources.NormalBanner, _marginControl.CommandLineTextBox.Text);
             }
 
             /// <summary>

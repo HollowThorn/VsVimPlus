@@ -31,6 +31,7 @@
       <DependentUpon>ConflictingKeyBindingMarginControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\ConflictingKey\ConflictingKeyBindingMarginProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Implementation\CommandMargin\CommandMarginColorSettingsAdapter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\CSharpScript\CSharpScriptExecutor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\CSharpScript\CSharpScriptGlobals.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\EditorFormatDefinitions.cs" />
@@ -42,6 +43,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\InlineRename\InlineRenameUtil.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\IntelliCode\IntelliCodeCommandTarget.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\Intellicode\IntelliCodeExtensionAdapter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Implementation\Misc\ClipboardSettingSync.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\Misc\CSharpAdapter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\Misc\ExtensionAdapterBroker.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\Misc\FallbackKeyProcessor.cs" />
@@ -72,6 +74,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\OptionPages\KeyboardSettingsControl.xaml.cs">
       <DependentUpon>KeyboardSettingsControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Implementation\OptionPages\ModeColorRow.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Implementation\OptionPages\ModeColorsOptionPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Implementation\OptionPages\ModeColorsSettingsControl.xaml.cs">
+      <DependentUpon>ModeColorsSettingsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Implementation\OptionPages\VsVimPlusOptionPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\PowerShellTools\IPowerShellToolsUtil.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\PowerShellTools\PowerShellToolsExtensionAdapter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\PowerShellTools\PowerShellToolsUtil.cs" />
@@ -83,6 +91,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\ReSharper\ReSharperUtil.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\ReSharper\ReSharperVersion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\ReSharper\ResharperVersionutility.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Implementation\Settings\ModeColorDefaults.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\Settings\SettingSerializer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\Settings\VimApplicationSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\Settings\VimCollectionSettingsStore.cs" />
@@ -134,6 +143,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Implementation\OptionPages\KeyboardSettingsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Implementation\OptionPages\ModeColorsSettingsControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

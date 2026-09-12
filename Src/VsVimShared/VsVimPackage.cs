@@ -29,6 +29,8 @@ namespace Vim.VisualStudio
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [ProvideOptionPage(typeof(Vim.VisualStudio.Implementation.OptionPages.DefaultOptionPage), categoryName: "VsVim", pageName: "Defaults", categoryResourceID: 0, pageNameResourceID: 0, supportsAutomation: true)]
     [ProvideOptionPage(typeof(Vim.VisualStudio.Implementation.OptionPages.KeyboardOptionPage), categoryName: "VsVim", pageName: "Keyboard", categoryResourceID: 0, pageNameResourceID: 0, supportsAutomation: true)]
+    [ProvideOptionPage(typeof(Vim.VisualStudio.Implementation.OptionPages.ModeColorsOptionPage), categoryName: "VsVim", pageName: "Mode Colors", categoryResourceID: 0, pageNameResourceID: 0, supportsAutomation: true)]
+    [ProvideOptionPage(typeof(Vim.VisualStudio.Implementation.OptionPages.VsVimPlusOptionPage), categoryName: "VsVim", pageName: "VsVimPlus", categoryResourceID: 0, pageNameResourceID: 0, supportsAutomation: true)]
     [Guid(GuidList.VsVimPackageString)]
     public sealed class VsVimPackage : AsyncPackage, IOleCommandTarget
     {
