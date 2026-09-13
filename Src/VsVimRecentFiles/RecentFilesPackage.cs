@@ -10,9 +10,9 @@ using Microsoft.VisualStudio.Shell;
 namespace Vim.VisualStudio.RecentFiles
 {
     /// <summary>
-    /// Owns exactly one command (".VsVimPlus.ShowRecentFiles") so it can be bound the ordinary
+    /// Owns exactly one command ("VsVimPlus.ShowRecentFiles") so it can be bound the ordinary
     /// Visual Studio way (Tools &gt; Options &gt; Keyboard) or invoked from a vimrc via
-    /// ":vscmd .VsVimPlus.ShowRecentFiles". Deliberately separate from VsVim's own package so this
+    /// ":vscmd VsVimPlus.ShowRecentFiles". Deliberately separate from VsVim's own package so this
     /// feature has no footprint in VsVimShared/VsVim2022 at all.
     /// </summary>
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]

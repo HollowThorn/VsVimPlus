@@ -2,7 +2,7 @@
 <CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
   <!-- This defines a single, menu-less command so it can be bound via Tools > Options >
-       Keyboard, and invoked from a vimrc via ":vscmd .VsVimPlus.ShowRecentFiles". -->
+       Keyboard, and invoked from a vimrc via ":vscmd VsVimPlus.ShowRecentFiles". -->
 
   <Extern href="stdidcmd.h" />
   <Extern href="vsshlids.h" />
@@ -21,8 +21,8 @@
         <Strings>
           <CommandName>cmdidShowRecentFiles</CommandName>
           <ButtonText>Show Recent Files</ButtonText>
-          <CanonicalName>.VsVimPlus.ShowRecentFiles</CanonicalName>
-          <LocCanonicalName>.VsVimPlus.ShowRecentFiles</LocCanonicalName>
+          <CanonicalName>VsVimPlus.ShowRecentFiles</CanonicalName>
+          <LocCanonicalName>VsVimPlus.ShowRecentFiles</LocCanonicalName>
         </Strings>
       </Button>
     </Buttons>

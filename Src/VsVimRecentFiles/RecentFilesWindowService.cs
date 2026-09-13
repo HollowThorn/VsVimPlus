@@ -15,7 +15,7 @@ namespace Vim.VisualStudio.RecentFiles
 {
     /// <summary>
     /// Builds and shows the recent files picker window, and opens whatever file the user chose
-    /// from it. Invoked from RecentFilesPackage in response to the ".VsVimPlus.ShowRecentFiles"
+    /// from it. Invoked from RecentFilesPackage in response to the "VsVimPlus.ShowRecentFiles"
     /// command.
     /// </summary>
     [Export(typeof(RecentFilesWindowService))]
@@ -47,7 +47,7 @@ namespace Vim.VisualStudio.RecentFiles
 
         internal void ShowPicker()
         {
-            // Called synchronously from whatever invoked the ".VsVimPlus.ShowRecentFiles" command -
+            // Called synchronously from whatever invoked the "VsVimPlus.ShowRecentFiles" command -
             // when that's a vim key mapping via ":vscmd", we're still deep inside Vim's key
             // processing. Visual Studio does its own focus bookkeeping once that finishes, which
             // runs *after* this method returns and would stomp on any focus set up here - the
