@@ -116,7 +116,7 @@ namespace Vim.UI.Wpf.Implementation.CommandMargin
             {
                 case ModeKind.Normal:
                     status = string.IsNullOrEmpty(oneTimeArgument)
-                        ? string.Empty
+                        ? CommandMarginResources.NormalBanner
                         : string.Format("-- {0} --", oneTimeArgument);
                     break;
                 case ModeKind.Command:
