@@ -26,6 +26,11 @@ added here may or may not be proposed back upstream.
   content copied outside Visual Studio can be pasted with `p`/`P`. Off by default;
   enable it under `Tools > Options > VsVim > VsVimPlus` ("Use System Clipboard as
   Unnamed Register").
+- **Recent files picker** — a dark, fuzzy-searchable popup listing recently visited
+  files, similar to Neovim's own recent-files navigation. Bind it the usual VS way
+  (`Tools > Options > Keyboard`, search for `.VsVimPlus.ShowRecentFiles`) or from a
+  vimrc with `nnoremap <leader>fr :vsc .VsVimPlus.ShowRecentFiles<CR>`. No settings
+  toggle — it's just a command like any other Visual Studio command.
 
 Fork-added settings that don't need a dedicated UI (like the clipboard option above)
 live together under `Tools > Options > VsVim > VsVimPlus`, kept separate from

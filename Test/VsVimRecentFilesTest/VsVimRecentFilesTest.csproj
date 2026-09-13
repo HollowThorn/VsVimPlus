@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Vim.VisualStudio.RecentFiles.UnitTest</RootNamespace>
+    <AssemblyName>VsVim.RecentFiles.UnitTest</AssemblyName>
+    <TargetFramework>net472</TargetFramework>
+    <VsVimProjectType>EditorHost</VsVimProjectType>
+    <VsVimVisualStudioTargetVersion>17.0</VsVimVisualStudioTargetVersion>
+    <RunAnalyzers>false</RunAnalyzers>
+    <EmbedUntrackedSources>false</EmbedUntrackedSources>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Moq" Version="4.5.28" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.extensibility.execution" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.console" Version="2.4.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Src\VsVimRecentFiles\VsVimRecentFiles.csproj" />
+  </ItemGroup>
+</Project>
