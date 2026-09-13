@@ -54,7 +54,14 @@ namespace Vim.VisualStudio.RecentFiles
             // picker would appear but keyboard input (typing, Delete, ...) kept going to the
             // editor underneath. Deferring the actual window creation to the next dispatcher pass
             // lets that finish first, so our window's focus is the last thing set and sticks.
-            Application.Current?.Dispatcher.BeginInvoke(new Action(ShowPickerCore), DispatcherPriority.ApplicationIdle);
+            //
+            // Background (not ApplicationIdle): ApplicationIdle only runs once the dispatcher has
+            // *nothing* else pending, which in an active editor (caret blink, focus events, ongoing
+            // key processing) can be starved indefinitely - the picker would only actually appear
+            // once some unrelated keystroke (e.g. the user manually pressing Enter) happened to
+            // create a gap. Background still defers past the current call stack, but is guaranteed
+            // to run on the very next dispatcher pass.
+            Application.Current?.Dispatcher.BeginInvoke(new Action(ShowPickerCore), DispatcherPriority.Background);
         }
 
         private bool TryGetActiveTextView(out IWpfTextView textView)
